@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vault | Secure file uploads</title>
+<meta name="description" content="Upload images and documents to private cloud storage with validation, thumbnails and a personal gallery.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/app.js" type="module"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/favicon.svg" width="28" height="28" alt=""> Vault</a>
+    <div id="userbar" class="userbar" hidden>
+      <span id="user-email" class="muted"></span>
+      <button id="logout" class="btn ghost" type="button">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+
+  <!-- Signed-out view -->
+  <section id="auth-view" class="card auth" hidden aria-labelledby="auth-title">
+    <h1 id="auth-title">Your private file vault</h1>
+    <p class="muted">Upload images and documents. Only you can see them.</p>
+    <div class="tabs" role="tablist" aria-label="Account">
+      <button id="tab-login" role="tab" aria-selected="true" aria-controls="auth-form" type="button">Sign in</button>
+      <button id="tab-register" role="tab" aria-selected="false" aria-controls="auth-form" type="button">Create account</button>
+    </div>
+    <form id="auth-form" novalidate>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+      <label for="password">Password <span id="pw-hint" class="muted" hidden>(at least 10 characters)</span></label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required minlength="10" maxlength="128">
+      <p id="auth-error" class="error" role="alert" hidden></p>
+      <button id="auth-submit" class="btn primary" type="submit">Sign in</button>
+    </form>
+  </section>
+
+  <!-- Signed-in view -->
+  <div id="app-view" hidden>
+    <section class="card" aria-labelledby="upload-title">
+      <h1 id="upload-title">Upload files</h1>
+      <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-describedby="drop-help">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+        <p><strong>Drop files here</strong> or <span class="link">browse</span></p>
+        <p id="drop-help" class="muted small">JPEG, PNG, WebP, GIF, PDF or TXT. Up to <span id="max-mb">10</span> MB each.</p>
+        <input id="file-input" type="file" multiple hidden accept=".jpg,.jpeg,.png,.webp,.gif,.pdf,.txt,image/jpeg,image/png,image/webp,image/gif,application/pdf,text/plain">
+      </div>
+      <ul id="queue" class="queue" aria-label="Uploads"></ul>
+    </section>
+
+    <section class="card" aria-labelledby="gallery-title">
+      <div class="row">
+        <h2 id="gallery-title">Your files</h2>
+        <p id="usage" class="muted small"></p>
+      </div>
+      <p id="empty" class="muted" hidden>Nothing here yet. Upload your first file above.</p>
+      <ul id="gallery" class="gallery"></ul>
+      <p class="center"><button id="more" class="btn" type="button" hidden>Load more</button></p>
+    </section>
+  </div>
+</main>
+
+<!-- Viewer -->
+<dialog id="viewer" class="dialog" aria-labelledby="viewer-title">
+  <div class="dialog-head">
+    <h2 id="viewer-title" class="ellipsis"></h2>
+    <button id="viewer-close" class="btn ghost" type="button" aria-label="Close">Close</button>
+  </div>
+  <div id="viewer-body" class="viewer-body"></div>
+  <div class="dialog-foot">
+    <span id="viewer-meta" class="muted small"></span>
+    <span class="actions">
+      <button id="viewer-download" class="btn" type="button">Download</button>
+      <button id="viewer-delete" class="btn danger" type="button">Delete</button>
+    </span>
+  </div>
+</dialog>
+
+<!-- Delete confirmation -->
+<dialog id="confirm" class="dialog small-dialog" aria-labelledby="confirm-title">
+  <h2 id="confirm-title">Delete this file?</h2>
+  <p id="confirm-text" class="muted"></p>
+  <div class="dialog-foot end">
+    <button id="confirm-cancel" class="btn" type="button">Cancel</button>
+    <button id="confirm-ok" class="btn danger" type="button">Delete permanently</button>
+  </div>
+</dialog>
+
+<div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+</body>
+</html>
