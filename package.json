@@ -1,0 +1,33 @@
+{
+  "name": "secure-upload-pipeline",
+  "version": "1.0.0",
+  "description": "Secure file upload and media pipeline (S3 signed URLs, validation, thumbnails, gallery)",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test --test-concurrency=1 \"test/*.test.js\"",
+    "start": "node src/server.js",
+    "dev": "node src/dev.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private": "true",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@aws-sdk/s3-request-presigner": "^3.1161.0",
+    "better-sqlite3": "^13.0.3",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.3",
+    "file-type": "^22.3.0",
+    "helmet": "^8.3.0",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "s3rver": "^3.7.1"
+  }
+}
